@@ -6,7 +6,7 @@
 /*   By: ilouacha <ilouacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 22:00:11 by ilouacha          #+#    #+#             */
-/*   Updated: 2023/12/15 23:15:47 by ilouacha         ###   ########.fr       */
+/*   Updated: 2023/12/18 15:11:18 by ilouacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ typedef struct s_data
 	int				time_to_sleep;
 	int				nb_meals;
 	int				belly;
+	int				is_dead;
+	int				is_full;
 	bool			full;
 	bool			dead;
 	pthread_mutex_t	lock;
@@ -62,9 +64,11 @@ typedef struct s_data
 	t_philo			*philo;
 }		t_data;
 
-void	print_action(char *str, t_data *data, int id);
+void		print_action(char *str, t_data *data, int id);
 long long	current_time();
-
-
+int			ft_parse(int ac, char **av);
+size_t		ft_strlen(const char *s);
+int			ft_strncmp(const char *s1, const char *s2, size_t n);
+void		init_data(t_data *data, int ac, char **av);
 
 #endif
