@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilouacha <ilouacha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ilham_oua <ilham_oua@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 22:00:11 by ilouacha          #+#    #+#             */
-/*   Updated: 2023/12/18 15:11:18 by ilouacha         ###   ########.fr       */
+/*   Updated: 2023/12/18 19:52:58 by ilham_oua        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ struct s_data;
 typedef struct s_philo
 {
 	unsigned long	nb_meals;
-	long long		start;
+	long long		start_time;
 	long long		time_last_meal;
 	int				id;
 	int				is_dead;
@@ -60,7 +60,7 @@ typedef struct s_data
 	pthread_mutex_t	print;
 	pthread_mutex_t	death;
 	pthread_t		*tid;
-	pthread_t		thread_death;
+	pthread_t		thread2;
 	t_philo			*philo;
 }		t_data;
 
@@ -70,5 +70,9 @@ int			ft_parse(int ac, char **av);
 size_t		ft_strlen(const char *s);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 void		init_data(t_data *data, int ac, char **av);
+void		init_philos(t_data *data);
+void    	start_routine(t_data *data);
+void		*routine_func(void *args);
+void		*death_philo(void *args);
 
 #endif

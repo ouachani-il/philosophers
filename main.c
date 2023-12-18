@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilouacha <ilouacha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ilham_oua <ilham_oua@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 22:41:03 by ilouacha          #+#    #+#             */
-/*   Updated: 2023/12/18 15:02:52 by ilouacha         ###   ########.fr       */
+/*   Updated: 2023/12/18 19:41:44 by ilham_oua        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int	main(int ac, char **av)
 		return (0);
 	init_data(&data, ac, av);
 	init_mutex(&data);
-	init_philo(&data);
+	init_philos(&data);
+	start_routine(&data);
 	
 
 }
