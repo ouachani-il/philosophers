@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilham_oua <ilham_oua@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ilouacha <ilouacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 22:39:28 by ilouacha          #+#    #+#             */
-/*   Updated: 2023/12/18 19:16:23 by ilham_oua        ###   ########.fr       */
+/*   Updated: 2023/12/19 17:15:04 by ilouacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void	init_mutex(t_data *data)
 		pthread_mutex_init(&mutex[i], NULL);
 		i++;
 	}
-	pthread_mutex_inti(&data->death, NULL);
-	pthread_mutex_inti(&data->print, NULL);
-	pthread_mutex_inti(&data->lock, NULL);
+	pthread_mutex_init(&data->death, NULL);
+	pthread_mutex_init(&data->print, NULL);
+	pthread_mutex_init(&data->lock, NULL);
 	data->forks = mutex;
 }
 
@@ -48,8 +48,6 @@ void	init_philos(t_data *data)
 		philo[i].time_to_eat = data->time_to_eat;
 		philo[i].time_to_sleep = data->time_to_sleep;
 		philo[i].nb_meals = 0;
-		philo[i].left_fork = i;
-		philo[i].right_fork = (i + 1) % data->nb_philos;
 		philo[i].nb_philos = data->nb_philos;
 		philo[i].data = data;
 		philo[i].time_last_meal = current_time();

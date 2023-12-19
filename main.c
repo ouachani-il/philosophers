@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilham_oua <ilham_oua@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ilouacha <ilouacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 22:41:03 by ilouacha          #+#    #+#             */
-/*   Updated: 2023/12/18 19:41:44 by ilham_oua        ###   ########.fr       */
+/*   Updated: 2023/12/19 12:25:30 by ilouacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	main(int ac, char **av)
 	t_data	data;
 
 	if (ac > 6 || ac < 5)
-		return (printf("incorrect arguments numbers"), 0);
+		return (printf("incorrect arguments number"), 0);
 	if (ft_strncmp(av[ac - 1], "0", 1) == 0)
 		return (printf("Philosophers don't need to eat\n"), 0);
 	if (ft_parse(ac, av) == 1)
@@ -47,7 +47,7 @@ int	main(int ac, char **av)
 	init_data(&data, ac, av);
 	init_mutex(&data);
 	init_philos(&data);
-	start_routine(&data);
+	//start_routine(&data);
 	
 
 }

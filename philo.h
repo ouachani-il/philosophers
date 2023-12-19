@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilham_oua <ilham_oua@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ilouacha <ilouacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 22:00:11 by ilouacha          #+#    #+#             */
-/*   Updated: 2023/12/18 19:52:58 by ilham_oua        ###   ########.fr       */
+/*   Updated: 2023/12/19 17:14:36 by ilouacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ typedef struct s_philo
 	int				id;
 	int				is_dead;
 	int				nb_philos;
-	int				left_fork;
-	int				right_fork;
 	int				time_to_eat;
 	int				time_to_die;
 	int				time_to_sleep;
@@ -74,5 +72,6 @@ void		init_philos(t_data *data);
 void    	start_routine(t_data *data);
 void		*routine_func(void *args);
 void		*death_philo(void *args);
+void		ft_usleep(int time, t_data *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ilouacha <ilouacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 22:42:51 by ilouacha          #+#    #+#             */
-/*   Updated: 2023/12/18 14:55:47 by ilouacha         ###   ########.fr       */
+/*   Updated: 2023/12/19 12:46:42 by ilouacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,16 @@ long long	current_time()
 	struct timeval	tv;
 	gettimeofday(&tv, NULL);
 	return ((long long) (tv.tv_sec * 1000 + tv.tv_usec / 1000));
+}
+
+void	ft_usleep(int time, t_data *data)
+{
+	long	start_time;
+
+	start_time = current_time();
+	while (current_time() - start_time < time
+		&& data->dead == false && data->full == false)
+		usleep(time / 10);
 }
 
 size_t	ft_strlen(const char *s)
