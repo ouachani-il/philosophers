@@ -6,7 +6,7 @@
 /*   By: ilouacha <ilouacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 22:00:11 by ilouacha          #+#    #+#             */
-/*   Updated: 2023/12/22 16:09:20 by ilouacha         ###   ########.fr       */
+/*   Updated: 2023/12/22 17:14:15 by ilouacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void		sleeping(t_philo *philo);
 void		thinking(t_philo *philo);
 void		eating_suite(t_philo *philo);
 void		eating(t_philo *philo);
-//void		*(void *args);
 void		*routine_func(void *args);
 void		start_routine(t_data *data);
 void		end_routine(t_data *data);

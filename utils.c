@@ -6,7 +6,7 @@
 /*   By: ilouacha <ilouacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 22:42:51 by ilouacha          #+#    #+#             */
-/*   Updated: 2023/12/22 16:11:12 by ilouacha         ###   ########.fr       */
+/*   Updated: 2023/12/22 17:16:22 by ilouacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	print_action(char *str, t_data *data, int id)
 {
-	printf("%lldms %d %s\n", current_time() - data->start, id, str);
+	printf("%lldms %d %s\n", current_time() - data->start, id + 1, str);
 }
 
 long long	current_time(void)

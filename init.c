@@ -6,7 +6,7 @@
 /*   By: ilouacha <ilouacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 22:39:28 by ilouacha          #+#    #+#             */
-/*   Updated: 2023/12/22 16:03:58 by ilouacha         ###   ########.fr       */
+/*   Updated: 2023/12/22 17:14:58 by ilouacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ void	init_philos(t_data *data)
 
 void	init_data(t_data *data, int ac, char **av)
 {
-	data->nb_philos = atoi(av[1]);
-	data->time_die = atoi(av[2]);
-	data->time_to_eat = atoi(av[3]);
-	data->time_to_sleep = atoi(av[4]);
+	data->nb_philos = ft_atoi(av[1]);
+	data->time_die = ft_atoi(av[2]);
+	data->time_to_eat = ft_atoi(av[3]);
+	data->time_to_sleep = ft_atoi(av[4]);
 	data->is_dead = 0;
 	if (ac == 6)
 		data->nb_meals = ft_atoi(av[5]);
