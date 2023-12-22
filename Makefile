@@ -6,19 +6,18 @@
 #    By: ilouacha <ilouacha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/19 12:26:07 by ilouacha          #+#    #+#              #
-#    Updated: 2023/12/19 12:41:41 by ilouacha         ###   ########.fr        #
+#    Updated: 2023/12/22 15:49:33 by ilouacha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME= philo
 
-SRC=	  main.c\
-			utils.c\
-			routine.c\
+SRC=		main.c\
 			init.c\
-			#actions.c\
-			#destroy_free.c\
-			#utils2.c\
+			routine.c\
+			actions.c\
+			utils.c\
+			utils2.c\
 			
 
 CC= cc -g3

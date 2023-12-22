@@ -6,7 +6,7 @@
 /*   By: ilouacha <ilouacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 22:39:28 by ilouacha          #+#    #+#             */
-/*   Updated: 2023/12/19 17:15:04 by ilouacha         ###   ########.fr       */
+/*   Updated: 2023/12/22 16:03:58 by ilouacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,23 @@ void	init_mutex(t_data *data)
 	}
 	pthread_mutex_init(&data->death, NULL);
 	pthread_mutex_init(&data->print, NULL);
-	pthread_mutex_init(&data->lock, NULL);
 	data->forks = mutex;
 }
-
 
 void	init_philos(t_data *data)
 {
 	t_philo	*philo;
 	int		i;
-	
+
 	philo = malloc(sizeof(t_philo) * data->nb_philos);
 	if (!philo)
-		return (printf("fail in philo structure allocation\n"));
+		return ;
 	memset(philo, 0, data->nb_philos);
 	i = 0;
 	while (i < data->nb_philos)
 	{
 		philo[i].id = i;
-		philo[i].time_to_die = data->time_to_die;
+		philo[i].time_die = data->time_die;
 		philo[i].time_to_eat = data->time_to_eat;
 		philo[i].time_to_sleep = data->time_to_sleep;
 		philo[i].nb_meals = 0;
@@ -60,7 +58,7 @@ void	init_philos(t_data *data)
 void	init_data(t_data *data, int ac, char **av)
 {
 	data->nb_philos = atoi(av[1]);
-	data->time_to_die = atoi(av[2]);
+	data->time_die = atoi(av[2]);
 	data->time_to_eat = atoi(av[3]);
 	data->time_to_sleep = atoi(av[4]);
 	data->is_dead = 0;
@@ -68,7 +66,7 @@ void	init_data(t_data *data, int ac, char **av)
 		data->nb_meals = ft_atoi(av[5]);
 	else
 		data->nb_meals = -1;
-	data->is_full = data->nb_meals * data->nb_philos;
+	data->all_full = data->nb_meals * data->nb_philos;
 	data->belly = 0;
 	data->dead = false;
 	data->full = false;

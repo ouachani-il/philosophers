@@ -6,7 +6,7 @@
 /*   By: ilouacha <ilouacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 22:42:51 by ilouacha          #+#    #+#             */
-/*   Updated: 2023/12/19 12:46:42 by ilouacha         ###   ########.fr       */
+/*   Updated: 2023/12/22 16:11:12 by ilouacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,12 @@ void	print_action(char *str, t_data *data, int id)
 	printf("%lldms %d %s\n", current_time() - data->start, id, str);
 }
 
-long long	current_time()
+long long	current_time(void)
 {
 	struct timeval	tv;
+
 	gettimeofday(&tv, NULL);
-	return ((long long) (tv.tv_sec * 1000 + tv.tv_usec / 1000));
+	return ((long long)(tv.tv_sec * 1000 + tv.tv_usec / 1000));
 }
 
 void	ft_usleep(int time, t_data *data)

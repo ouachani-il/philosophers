@@ -6,7 +6,7 @@
 /*   By: ilouacha <ilouacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 22:00:11 by ilouacha          #+#    #+#             */
-/*   Updated: 2023/12/19 17:14:36 by ilouacha         ###   ########.fr       */
+/*   Updated: 2023/12/22 16:09:20 by ilouacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@
 # include <limits.h>
 # include <stdbool.h>
 
-struct s_data;
-
+struct	s_data;
 
 typedef struct s_philo
 {
@@ -35,25 +34,24 @@ typedef struct s_philo
 	int				is_dead;
 	int				nb_philos;
 	int				time_to_eat;
-	int				time_to_die;
+	int				time_die;
 	int				time_to_sleep;
 	struct s_data	*data;
 }		t_philo;
 
 typedef struct s_data
 {
-	unsigned long	nb_philos;
+	unsigned long	nb_meals;
 	long long		start;
-	int				time_to_die;
+	int				time_die;
 	int				time_to_eat;
 	int				time_to_sleep;
-	int				nb_meals;
+	int				nb_philos;
 	int				belly;
 	int				is_dead;
-	int				is_full;
+	int				all_full;
 	bool			full;
 	bool			dead;
-	pthread_mutex_t	lock;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print;
 	pthread_mutex_t	death;
@@ -63,15 +61,25 @@ typedef struct s_data
 }		t_data;
 
 void		print_action(char *str, t_data *data, int id);
-long long	current_time();
+long long	current_time(void);
 int			ft_parse(int ac, char **av);
 size_t		ft_strlen(const char *s);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 void		init_data(t_data *data, int ac, char **av);
 void		init_philos(t_data *data);
-void    	start_routine(t_data *data);
-void		*routine_func(void *args);
-void		*death_philo(void *args);
+void		init_mutex(t_data *data);
 void		ft_usleep(int time, t_data *data);
+void		release_forks(t_philo *philo);
+void		sleeping(t_philo *philo);
+void		thinking(t_philo *philo);
+void		eating_suite(t_philo *philo);
+void		eating(t_philo *philo);
+//void		*(void *args);
+void		*routine_func(void *args);
+void		start_routine(t_data *data);
+void		end_routine(t_data *data);
+void		*death_philo(void *args);
+void		destroy_and_free(t_data *data);
+int			ft_atoi(const char *nptr);
 
 #endif

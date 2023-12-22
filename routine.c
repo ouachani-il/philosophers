@@ -6,7 +6,7 @@
 /*   By: ilouacha <ilouacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 19:21:09 by ilham_oua         #+#    #+#             */
-/*   Updated: 2023/12/19 19:50:51 by ilouacha         ###   ########.fr       */
+/*   Updated: 2023/12/22 16:07:16 by ilouacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,30 +29,9 @@ void	*routine_func(void *args)
 		if (data->dead == false || data->full == false)
 			sleeping(philo);
 		if (data->dead == false || data->full == false)
-		thinking(philo);
+			thinking(philo);
 	}
 	return (NULL);
-}
-
-void	start_routine(t_data *data)
-{
-	pthread_t	*thread_id;
-	int		i;
-	int		status;
-
-	i = 0;
-	status = 0;
-	thread_id = malloc(sizeof(pthread_t) * data->nb_philos);
-	data->start = current_time();
-	pthread_create(&data->thread2, NULL, death_philo, data);
-	pthread_detach(data->thread2);
-	while (i < data->nb_philos)
-	{
-		if (pthread_create(&thread_id[i], NULL, &routine_func, &data->philo[i]) != 0)
-		{
-	
-		}
-	}
 }
 
 void	*death_philo(void *args)
@@ -67,13 +46,71 @@ void	*death_philo(void *args)
 		i = -1;
 		while (++i < data->nb_philos)
 		{
-			if (current_time() - data->philo[i].time_last_meal > data->time_to_die
-					&& data->full == false)
+			if (current_time() - data->philo[i].time_last_meal > data->time_die
+				&& data->full == false)
 			{
 				pthread_mutex_lock(&data->print);
 				if (data->nb_philos == 1)
-					pthread_mutex_unlock(&data->forks)
+					pthread_mutex_unlock(&data->forks[data->philo[i].id]);
+				print_action("died", data, i);
+				data->dead = true;
+				pthread_mutex_unlock(&data->print);
+				return (NULL);
 			}
 		}
 	}
+	return (NULL);
+}
+
+void	start_routine(t_data *data)
+{
+	pthread_t	*thread_id;
+	int			i;
+
+	i = 0;
+	thread_id = malloc(sizeof(pthread_t) * data->nb_philos);
+	data->start = current_time();
+	pthread_create(&data->thread2, NULL, death_philo, data);
+	pthread_detach(data->thread2);
+	while (i < data->nb_philos)
+	{
+		if (pthread_create
+			(&thread_id[i], NULL, &routine_func, &data->philo[i]) != 0)
+		{
+			printf("failed to create\n");
+			return ;
+		}
+		i++;
+	}
+	data->tid = thread_id;
+	return ;
+}
+
+void	end_routine(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->nb_philos)
+	{
+		pthread_join(data->tid[i], NULL);
+		i++;
+	}
+}
+
+void	destroy_and_free(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->nb_philos)
+	{
+		pthread_mutex_destroy(&data->forks[i]);
+		i++;
+	}
+	pthread_mutex_destroy(&data->death);
+	pthread_mutex_destroy(&data->print);
+	free(data->forks);
+	free(data->tid);
+	free(data->philo);
 }
