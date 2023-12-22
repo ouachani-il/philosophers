@@ -6,68 +6,47 @@
 /*   By: ilouacha <ilouacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 22:39:28 by ilouacha          #+#    #+#             */
-/*   Updated: 2023/12/22 17:14:58 by ilouacha         ###   ########.fr       */
+/*   Updated: 2023/12/22 21:00:38 by ilouacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
-void	init_mutex(t_data *data)
+void	init_semaphores(t_data *data)
 {
-	int				i;
-	pthread_mutex_t	*mutex;
-
-	i = 0;
-	mutex = malloc(sizeof(pthread_mutex_t) * data->nb_philos);
-	while (i < data->nb_philos)
-	{
-		pthread_mutex_init(&mutex[i], NULL);
-		i++;
-	}
-	pthread_mutex_init(&data->death, NULL);
-	pthread_mutex_init(&data->print, NULL);
-	data->forks = mutex;
+	sem_unlink("forks");
+	sem_unlink("print");
+	sem_unlink("full");
+	sem_unlink("death");
+	data->forks = sem_open("forks", O_CREAT | O_EXCL, S_IRWXU, data->nb_philos);
+	data->print = sem_open("print", O_CREAT | O_EXCL, S_IRWXU, 1);
+	data->full = sem_open("full", O_CREAT | O_EXCL, S_IRWXU, 0);
+	data->death = sem_open("death", O_CREAT | O_EXCL, S_IRWXU, 0);	
 }
 
-void	init_philos(t_data *data)
+void	init_philo(t_data *data)
 {
-	t_philo	*philo;
-	int		i;
-
-	philo = malloc(sizeof(t_philo) * data->nb_philos);
-	if (!philo)
-		return ;
-	memset(philo, 0, data->nb_philos);
-	i = 0;
-	while (i < data->nb_philos)
-	{
-		philo[i].id = i;
-		philo[i].time_die = data->time_die;
-		philo[i].time_to_eat = data->time_to_eat;
-		philo[i].time_to_sleep = data->time_to_sleep;
-		philo[i].nb_meals = 0;
-		philo[i].nb_philos = data->nb_philos;
-		philo[i].data = data;
-		philo[i].time_last_meal = current_time();
-		philo[i].is_dead = 0;
-		i++;
-	}
-	data->philo = philo;
+	data->philo.time_die = data->time_die;
+	data->philo.time_to_eat = data->time_to_eat;
+	data->philo.time_to_sleep = data->time_to_sleep;
+	data->philo.nb_meals = 0;
+	data->philo.nb_philos = data->nb_philos;
+	data->philo.data = data;
+	data->philo.time_last_meal = current_time();
 }
 
 void	init_data(t_data *data, int ac, char **av)
 {
+	memset(data, 0, sizeof(t_data));
 	data->nb_philos = ft_atoi(av[1]);
 	data->time_die = ft_atoi(av[2]);
 	data->time_to_eat = ft_atoi(av[3]);
 	data->time_to_sleep = ft_atoi(av[4]);
-	data->is_dead = 0;
+	data->start = current_time();
+	data->philo_id = malloc(sizeof(pid_t) * data->nb_philos);
+	memset(data->philo_id, 0, sizeof(pid_t) * data->nb_philos);
 	if (ac == 6)
 		data->nb_meals = ft_atoi(av[5]);
 	else
 		data->nb_meals = -1;
-	data->all_full = data->nb_meals * data->nb_philos;
-	data->belly = 0;
-	data->dead = false;
-	data->full = false;
 }

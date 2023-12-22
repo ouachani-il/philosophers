@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   philo_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ilouacha <ilouacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 22:00:11 by ilouacha          #+#    #+#             */
-/*   Updated: 2023/12/22 17:14:15 by ilouacha         ###   ########.fr       */
+/*   Updated: 2023/12/22 21:01:46 by ilouacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef PHILO_BONUS_H
+# define PHILO_BONUS_H
 
 # include <pthread.h>
 # include <stdlib.h>
@@ -21,17 +21,21 @@
 # include <sys/time.h>
 # include <string.h>
 # include <limits.h>
-# include <stdbool.h>
+# include <fcntl.h>
+# include <signal.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <semaphore.h>
+# include <errno.h>
 
 struct	s_data;
 
 typedef struct s_philo
 {
-	unsigned long	nb_meals;
-	long long		start_time;
-	long long		time_last_meal;
+	long			time_last_meal;
+	int				nb_meals;
+	int				start_time;
 	int				id;
-	int				is_dead;
 	int				nb_philos;
 	int				time_to_eat;
 	int				time_die;
@@ -41,23 +45,20 @@ typedef struct s_philo
 
 typedef struct s_data
 {
-	unsigned long	nb_meals;
-	long long		start;
+	int				nb_meals;
+	long int		start;
 	int				time_die;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				nb_philos;
-	int				belly;
-	int				is_dead;
-	int				all_full;
-	bool			full;
-	bool			dead;
-	pthread_mutex_t	*forks;
-	pthread_mutex_t	print;
-	pthread_mutex_t	death;
-	pthread_t		*tid;
-	pthread_t		thread2;
-	t_philo			*philo;
+	pid_t			*philo_id;
+	sem_t			*forks;
+	sem_t			*print;
+	sem_t			*death;
+	sem_t			*full;
+	pthread_t		supervisor;
+	pthread_t		death_thread;
+	t_philo			philo;
 }		t_data;
 
 void		print_action(char *str, t_data *data, int id);
@@ -66,19 +67,15 @@ int			ft_parse(int ac, char **av);
 size_t		ft_strlen(const char *s);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 void		init_data(t_data *data, int ac, char **av);
-void		init_philos(t_data *data);
-void		init_mutex(t_data *data);
-void		ft_usleep(int time, t_data *data);
-void		release_forks(t_philo *philo);
-void		sleeping(t_philo *philo);
-void		thinking(t_philo *philo);
-void		eating_suite(t_philo *philo);
-void		eating(t_philo *philo);
-void		*routine_func(void *args);
+void		init_semaphores(t_data *data);
+void		init_philo(t_data *data);
+void		ft_usleep(int time);
+void		sleep_think(t_data *data);
+void		eating(t_data *data);
+void		routine_func(t_data *data);
 void		start_routine(t_data *data);
-void		end_routine(t_data *data);
-void		*death_philo(void *args);
-void		destroy_and_free(t_data *data);
+void		*death(void *args);
 int			ft_atoi(const char *nptr);
+void		kill_process(t_data *data);
 
 #endif
