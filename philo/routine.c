@@ -6,7 +6,7 @@
 /*   By: ilouacha <ilouacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 19:21:09 by ilham_oua         #+#    #+#             */
-/*   Updated: 2023/12/22 16:07:16 by ilouacha         ###   ########.fr       */
+/*   Updated: 2024/02/02 23:30:23 by ilouacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,35 @@ void	*routine_func(void *args)
 	philo = (t_philo *)args;
 	data = philo->data;
 	philo->start_time = current_time();
+	pthread_mutex_lock(&data->death);
 	philo->time_last_meal = current_time();
+	pthread_mutex_unlock(&data->death);
 	if (philo->id % 2 == 0)
 		ft_usleep(20, data);
+	pthread_mutex_lock(&data->death);
 	while (data->dead == false && data->full == false)
 	{
+		pthread_mutex_unlock(&data->death);
 		eating(philo);
+		pthread_mutex_lock(&data->death);
 		if (data->dead == false || data->full == false)
+		{
+			pthread_mutex_unlock(&data->death);
 			sleeping(philo);
+		}
+		else
+			pthread_mutex_unlock(&data->death);
+		pthread_mutex_lock(&data->death);
 		if (data->dead == false || data->full == false)
+		{
+			pthread_mutex_unlock(&data->death);
 			thinking(philo);
+		}
+		else
+			pthread_mutex_unlock(&data->death);
+		pthread_mutex_lock(&data->death);
 	}
+	pthread_mutex_unlock(&data->death);
 	return (NULL);
 }
 
@@ -46,17 +64,23 @@ void	*death_philo(void *args)
 		i = -1;
 		while (++i < data->nb_philos)
 		{
+			pthread_mutex_lock(&data->death);
 			if (current_time() - data->philo[i].time_last_meal > data->time_die
 				&& data->full == false)
 			{
+				pthread_mutex_unlock(&data->death);
 				pthread_mutex_lock(&data->print);
 				if (data->nb_philos == 1)
 					pthread_mutex_unlock(&data->forks[data->philo[i].id]);
 				print_action("died", data, i);
-				data->dead = true;
 				pthread_mutex_unlock(&data->print);
+				pthread_mutex_lock(&data->death);
+				data->dead = true;
+				pthread_mutex_unlock(&data->death);
 				return (NULL);
 			}
+			else
+				pthread_mutex_unlock(&data->death);
 		}
 	}
 	return (NULL);
@@ -108,8 +132,8 @@ void	destroy_and_free(t_data *data)
 		pthread_mutex_destroy(&data->forks[i]);
 		i++;
 	}
-	pthread_mutex_destroy(&data->death);
-	pthread_mutex_destroy(&data->print);
+	// pthread_mutex_destroy(&data->death);
+	// pthread_mutex_destroy(&data->print);
 	free(data->forks);
 	free(data->tid);
 	free(data->philo);

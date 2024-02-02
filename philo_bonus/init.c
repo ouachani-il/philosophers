@@ -6,7 +6,7 @@
 /*   By: ilouacha <ilouacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 22:39:28 by ilouacha          #+#    #+#             */
-/*   Updated: 2023/12/22 21:00:38 by ilouacha         ###   ########.fr       */
+/*   Updated: 2024/01/26 14:50:12 by ilouacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	init_semaphores(t_data *data)
 	data->forks = sem_open("forks", O_CREAT | O_EXCL, S_IRWXU, data->nb_philos);
 	data->print = sem_open("print", O_CREAT | O_EXCL, S_IRWXU, 1);
 	data->full = sem_open("full", O_CREAT | O_EXCL, S_IRWXU, 0);
-	data->death = sem_open("death", O_CREAT | O_EXCL, S_IRWXU, 0);	
+	data->death = sem_open("death", O_CREAT | O_EXCL, S_IRWXU, 0);
 }
 
 void	init_philo(t_data *data)

@@ -6,7 +6,7 @@
 /*   By: ilouacha <ilouacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 22:41:03 by ilouacha          #+#    #+#             */
-/*   Updated: 2023/12/22 15:59:34 by ilouacha         ###   ########.fr       */
+/*   Updated: 2024/02/02 21:10:03 by ilouacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_parse(int ac, char **av)
 				return (printf("Enter 5 or 6 digits superior to 0\n"), 1);
 			j++;
 		}
-		if (ft_strncmp(av[ac - 1], "0", 1) == 0 && i != ac - 1)
+		if (ft_strncmp(av[i], "0", 1) == 0 && i != ac - 1)
 			return (printf("Enter only integers superior to 0\n"), 1);
 		i++;
 	}
@@ -40,8 +40,10 @@ int	main(int ac, char **av)
 
 	if (ac > 6 || ac < 5)
 		return (printf("incorrect arguments number"), 0);
-	if (ft_strncmp(av[ac - 1], "0", 1) == 0)
+	if ((ft_strncmp(av[ac - 1], "0", 1) == 0 && ac == 6))
 		return (printf("Philosophers don't need to eat\n"), 0);
+	if (ft_atoi(av[1]) > PHILO_MAX || ft_atoi(av[1]) <= 0)
+		return (write(2, "Invalid philosophers number\n", 29), 1);
 	if (ft_parse(ac, av) == 1)
 		return (0);
 	init_data(&data, ac, av);

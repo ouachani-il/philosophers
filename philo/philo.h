@@ -6,7 +6,7 @@
 /*   By: ilouacha <ilouacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 22:00:11 by ilouacha          #+#    #+#             */
-/*   Updated: 2023/12/22 17:14:15 by ilouacha         ###   ########.fr       */
+/*   Updated: 2024/02/02 21:10:22 by ilouacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <string.h>
 # include <limits.h>
 # include <stdbool.h>
+# define PHILO_MAX 200
 
 struct	s_data;
 

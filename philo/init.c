@@ -6,7 +6,7 @@
 /*   By: ilouacha <ilouacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 22:39:28 by ilouacha          #+#    #+#             */
-/*   Updated: 2023/12/22 17:14:58 by ilouacha         ###   ########.fr       */
+/*   Updated: 2024/01/29 13:40:20 by ilouacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	init_mutex(t_data *data)
 
 	i = 0;
 	mutex = malloc(sizeof(pthread_mutex_t) * data->nb_philos);
+	if (!mutex)
+		return ;
 	while (i < data->nb_philos)
 	{
 		pthread_mutex_init(&mutex[i], NULL);

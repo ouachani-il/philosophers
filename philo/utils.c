@@ -6,7 +6,7 @@
 /*   By: ilouacha <ilouacha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 22:42:51 by ilouacha          #+#    #+#             */
-/*   Updated: 2023/12/22 17:16:22 by ilouacha         ###   ########.fr       */
+/*   Updated: 2024/02/02 23:18:13 by ilouacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	print_action(char *str, t_data *data, int id)
 {
-	printf("%lldms %d %s\n", current_time() - data->start, id + 1, str);
+	printf("%lldms %d %s\n", (current_time() - data->start), id + 1, str);
 }
 
 long long	current_time(void)
@@ -30,9 +30,15 @@ void	ft_usleep(int time, t_data *data)
 	long	start_time;
 
 	start_time = current_time();
+	pthread_mutex_lock(&data->death);
 	while (current_time() - start_time < time
 		&& data->dead == false && data->full == false)
+	{
+		pthread_mutex_unlock(&data->death);
 		usleep(time / 10);
+		pthread_mutex_lock(&data->death);
+	}
+	pthread_mutex_unlock(&data->death);
 }
 
 size_t	ft_strlen(const char *s)

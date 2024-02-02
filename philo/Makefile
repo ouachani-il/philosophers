@@ -6,7 +6,7 @@
 #    By: ilouacha <ilouacha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/19 12:26:07 by ilouacha          #+#    #+#              #
-#    Updated: 2023/12/22 15:49:33 by ilouacha         ###   ########.fr        #
+#    Updated: 2024/02/02 22:45:06 by ilouacha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,8 @@ $(OBJ_DIR)/%.o: %.c
 all:		$(NAME)
 
 $(NAME):	$(OBJ)
-			$(CC) $(OBJ) -o $(NAME)
+			$(CC) -fsanitize=thread $(OBJ) -o $(NAME) #TSAN_OPTIONS=second_deadlock_stack=1
+#			$(CC) $(OBJ) -o $(NAME)
 
 clean:		
 		$(RM) $(OBJ)
